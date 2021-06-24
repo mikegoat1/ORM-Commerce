@@ -7,7 +7,7 @@ router.get('/', async (req, res) => {
 
   try {
     const categoriesData = await Category.findAll({
-      include: [{ model: Product },]
+      include: [{ model: Product }],
     });
     res.status(200).json(categoriesData);
   } catch (err) {
@@ -17,7 +17,9 @@ router.get('/', async (req, res) => {
 
 router.get('/:id', async (req, res) => {
   try {
-    const categoriesData = await Category.findByPk(req.params.id);
+    const categoriesData = await Category.findByPk(req.params.id, {
+      include: [{model: Product}],
+    });
     if (!categoriesData) {
       res.status(404).json({ message: "That is not a listed category." });
       return;
